@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Live Setter Coach</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header>
+    <div><span class="dot"></span> LIVE SETTER COACH <small>v0.5 · diagnoza i autozapis</small></div>
+    <div id="timer">00:00 / 10:00</div>
+  </header>
+  <main>
+    <section class="control panel">
+      <div>
+        <p class="eyebrow">Rozmowa telefoniczna</p>
+        <h1>Twój trener podczas rozmowy</h1>
+        <p class="muted">Telefon ustaw na głośnik obok laptopa. Aplikacja będzie słuchać przez mikrofon.</p>
+      </div>
+      <div class="buttons">
+        <button id="start" class="primary">Rozpocznij rozmowę</button>
+        <button id="stop" disabled>Zakończ i podsumuj</button>
+        <button id="discard" class="danger" disabled>Odrzuć rozmowę</button>
+      </div>
+      <label class="mode-switch">
+        <span>Tryb szybki</span>
+        <input id="ecoMode" type="checkbox">
+        <i></i>
+        <span>Oszczędny</span>
+      </label>
+      <div class="mic-box">
+        <div class="row"><span>Mikrofon</span><span id="micStatus">nieaktywny</span></div>
+        <div class="meter"><i id="micLevel"></i></div>
+        <small class="muted">Łagodne wzmocnienie głosu z telefonu bez agresywnego wycinania sylab</small>
+        <div id="status">Gotowy</div>
+      </div>
+    </section>
+
+    <section class="panel diagnosis diagnosis-wide">
+      <div class="row">
+        <div><p class="eyebrow">Diagnoza na żywo</p><h2 id="stage">Czekam na kontekst</h2></div>
+        <span id="confidence" class="confidence">Pewność: brak danych</span>
+      </div>
+      <p class="hint">AI samodzielnie przewiduje problem oraz konkretny model działania klienta. Nie podpowiada pytań.</p>
+      <div class="diagnosis-grid">
+        <div class="diagnosis-main">
+          <label>Najbardziej prawdopodobny główny problem</label>
+          <p id="problem" class="diagnosis-value">Jeszcze nieustalony.</p>
+          <label>Konkretna diagnoza AI</label>
+          <p id="aiDiagnosis">Czekam na pierwsze informacje o kliencie.</p>
+        </div>
+        <div>
+          <label>Co klient prawdopodobnie chce robić</label>
+          <p id="businessModel">Jeszcze nieustalone.</p>
+          <label>Na czym opieram ten wniosek</label>
+          <ul id="evidence"><li>brak danych</li></ul>
+          <label>Brakuje potwierdzić</label>
+          <ul id="missing"><li>kontekst klienta</li><li>obecny sposób działania</li></ul>
+        </div>
+      </div>
+      <div id="warning"></div>
+    </section>
+
+    <section class="panel transcript-panel">
+      <div class="row">
+        <div>
+          <p class="eyebrow">Słuch aplikacji</p>
+          <h2>Co słyszy aplikacja</h2>
+          <span id="transcriptCount" class="muted">0 zapisanych fragmentów</span>
+        </div>
+        <div class="buttons transcript-actions">
+          <button id="copyTranscript">Kopiuj całą rozmowę</button>
+          <button id="toggleTranscript">Powiększ</button>
+        </div>
+      </div>
+      <p class="hint transcript-hint">Każda usłyszana wypowiedź jest dopisywana poniżej i pozostaje dostępna do końca rozmowy.</p>
+      <div class="manual-entry">
+        <input id="manualText" type="text" placeholder="Opcjonalnie dopisz fragment, którego mikrofon nie złapał">
+        <button id="manual">Dodaj ręcznie</button>
+      </div>
+      <div id="liveTranscript" class="transcript"><span class="muted">Jeszcze nic nie zarejestrowano.</span></div>
+    </section>
+
+    <section class="panel archive-panel">
+      <div class="row">
+        <div>
+          <p class="eyebrow">Automatyczny zapis</p>
+          <h2>Archiwum rozmów · 30 dni</h2>
+        </div>
+        <span class="muted">Dostępne po ponownym uruchomieniu · automatycznie usuwane po 30 dniach</span>
+      </div>
+      <div id="conversationArchive" class="archive-list">
+        <span class="muted">Pierwszy zapis powstanie automatycznie po rozpoczęciu rozmowy.</span>
+      </div>
+    </section>
+
+    <section id="result" class="panel result hidden">
+      <div class="row">
+        <div><p class="eyebrow">Po rozmowie</p><h2>Notatka dla closera · CRM</h2></div>
+        <div class="buttons">
+          <button id="generateTranscript">Wygeneruj transkrypcję</button>
+          <button id="copy">Kopiuj całość</button>
+        </div>
+      </div>
+      <p class="hint">Uporządkowana notatka dla closera powstaje z tekstu „Co słyszy aplikacja”. Każdy fakt trafia tylko do jednej właściwej sekcji. Pełna transkrypcja jest generowana tylko po kliknięciu przycisku.</p>
+      <div id="finalContent">
+        <div id="summaryContent"></div>
+        <div id="generatedTranscript" class="hidden"></div>
+      </div>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>
